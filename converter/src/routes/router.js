@@ -14,7 +14,8 @@ router.get('/dolar', async (req, res) => {
     const dolarPrice = async () => {
         const data = await getData(urlDolar);
         const $ = cheerio.load(data);
-        const dolar = $('#comercial').val();
+        var dolar = $('#comercial').val();
+        var dolar = dolar.replace(",",".");
         res.render('../view/main.ejs', { dolar });
     }
  
