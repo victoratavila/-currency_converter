@@ -13,6 +13,3 @@ app.listen(3000, () => {
     console.log('The server is running');
 })
 
-const dolarPrice = require('./functions/dolar');
-const euroPrice = require('./functions/euro');
-const libraPrice = require('./functions/libra');
