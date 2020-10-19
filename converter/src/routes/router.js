@@ -3,6 +3,7 @@ const router = express.Router();
 const axios = require('axios');
 const cheerio = require('cheerio');
 const urlDolar = 'https://www.melhorcambio.com/dolar-hoje';
+const urlEuro = 'https://www.melhorcambio.com/euro-hoje';
 
 const getData = async (url) => {
     const result = await axios.get(url);
@@ -35,7 +36,35 @@ router.get('/real-to-dolar', async (req, res) => {
  
     dolarPrice();
   
-})
+});
+
+router.get('/euro-to-real', async (req, res) => {
+
+    const euroPrice = async () => {
+        const data = await getData(urlEuro);
+        const $ = cheerio.load(data);
+        var euro = $('#comercial').val();
+        var euro = euro.replace(",",".");
+        res.render('../view/euroToReal.ejs', { euro });
+    }
+
+    euroPrice();
+
+});
+
+router.get('/real-to-euro', async (req, res) => {
+
+    const euroPrice = async () => {
+        const data = await getData(urlEuro);
+        const $ = cheerio.load(data);
+        var euro = $('#comercial').val();
+        var euro = euro.replace(",",".");
+        res.render('../view/realToEuro.ejs', { euro });
+    }
+
+    euroPrice();
+
+});
 
 router.get('*', (req, res) => {
     res.render('../view/notFound.ejs');
