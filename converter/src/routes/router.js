@@ -9,18 +9,36 @@ const getData = async (url) => {
     return result.data;
 }
 
-router.get('/dolar', async (req, res) => {
+router.get('/dolar-to-real', async (req, res) => {
     
     const dolarPrice = async () => {
         const data = await getData(urlDolar);
         const $ = cheerio.load(data);
         var dolar = $('#comercial').val();
         var dolar = dolar.replace(",",".");
-        res.render('../view/main.ejs', { dolar });
+        res.render('../view/dolarToReal.ejs', { dolar });
     }
  
     dolarPrice();
   
+})
+
+router.get('/real-to-dolar', async (req, res) => {
+    
+    const dolarPrice = async () => {
+        const data = await getData(urlDolar);
+        const $ = cheerio.load(data);
+        var dolar = $('#comercial').val();
+        var dolar = dolar.replace(",",".");
+        res.render('../view/realToDolar.ejs', { dolar });
+    }
+ 
+    dolarPrice();
+  
+})
+
+router.get('*', (req, res) => {
+    res.render('../view/notFound.ejs');
 })
 
 module.exports = router;
