@@ -4,6 +4,7 @@ const axios = require('axios');
 const cheerio = require('cheerio');
 const urlDolar = 'https://www.melhorcambio.com/dolar-hoje';
 const urlEuro = 'https://www.melhorcambio.com/euro-hoje';
+const urlLibra = 'https://www.melhorcambio.com/libra-hoje';
 
 const getData = async (url) => {
     const result = await axios.get(url);
@@ -63,6 +64,34 @@ router.get('/real-to-euro', async (req, res) => {
     }
 
     euroPrice();
+
+});
+
+router.get('/libra-to-real', async (req, res) => {
+
+    const poundPrice = async () => {
+        const data = await getData(urlLibra);
+        const $ = cheerio.load(data);
+        var libra = $('#comercial').val();
+        var libra = libra.replace(",",".");
+        res.render('../view/poundToReal.ejs', { libra });
+    }
+
+    poundPrice();
+
+});
+
+router.get('/real-to-libra', async (req, res) => {
+
+    const poundPrice = async () => {
+        const data = await getData(urlLibra);
+        const $ = cheerio.load(data);
+        var libra = $('#comercial').val();
+        var libra = libra.replace(",",".");
+        res.render('../view/realToPound.ejs', { libra });
+    }
+
+    poundPrice();
 
 });
 
